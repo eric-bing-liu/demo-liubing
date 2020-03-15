@@ -1,0 +1,86 @@
+server:
+  tomcat:
+    # 默认编码格式
+    uri-encoding: UTF-8
+  port: 8000
+
+spring:
+
+  # 配置freemarker
+  freemarker:
+    # 设置模板后缀名
+    suffix: .ftl
+    # 设置文档类型
+    content-type: text/html
+    # 设置页面编码格式
+    charset: UTF-8
+    # 设置页面缓存
+    cache: false
+    # 设置ftl文件路径
+    template-loader-path: classpath:/freemarker
+    expose-request-attributes: true
+    check-template-location: true
+    mvc:
+      # 设置静态文件路径，js,css等  /static/**
+      static-path-pattern: /static/**
+  datasource:
+    name: test
+    # jwjw测试环境mysql数据库 5.7 server
+#    url: jdbc:mysql://127.0.0.1:3306/auth?useUnicode=true&characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+    url: jdbc:highgo://127.0.0.1:5866/highgo
+    username: highgo
+    password: highgo2020
+    # oscar db
+#    url: jdbc:oscar://169.254.63.9/zcptdb
+#    username: SYSDBA
+#    password: szoscar55
+
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.highgo.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+
+  # 默认编码格式
+  messages:
+    encoding: UTF-8
+  banner:
+    charset: UTF-8
+    location: banner.txt
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml,classpath:mapping/*/*.xml,classpath:mapping/*/*/*.xml
+  type-aliases-package: com.sinosoft.demospringboot2highgo.model
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#pagehelper分页插件
+pagehelper:
+  # mysql oracle db2
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# 日志配置
+logging:
+  config:classpath: log/logback-spring.xml
+  path: D:/home/jwjw
+

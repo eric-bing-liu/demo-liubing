@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinosoft.codegenerator.mapper.SUserMapper">
+  <resultMap id="BaseResultMap" type="com.sinosoft.codegenerator.model.SUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="tdate" jdbcType="DATE" property="tdate" />
+    <result column="ttimestamp" jdbcType="TIMESTAMP" property="ttimestamp" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from s_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.sinosoft.codegenerator.model.SUser" useGeneratedKeys="true">
+    insert into s_user (user_name, tdate, ttimestamp
+      )
+    values (#{userName,jdbcType=VARCHAR}, #{tdate,jdbcType=DATE}, #{ttimestamp,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sinosoft.codegenerator.model.SUser">
+    update s_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      tdate = #{tdate,jdbcType=DATE},
+      ttimestamp = #{ttimestamp,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, user_name, tdate, ttimestamp
+    from s_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_name, tdate, ttimestamp
+    from s_user
+  </select>
+</mapper>

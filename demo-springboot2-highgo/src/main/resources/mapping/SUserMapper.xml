@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinosoft.demospringboot2highgo.mapper.SUserMapper">
+  <resultMap id="BaseResultMap" type="com.sinosoft.demospringboot2highgo.model.SUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from S_DEMO
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.sinosoft.demospringboot2highgo.model.SUser" useGeneratedKeys="true">
+    INSERT INTO s_user (id, user_name)
+    VALUES(#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sinosoft.demospringboot2highgo.model.SUser">
+    update s_user
+    set user_name = #{userName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, user_name
+    from s_user
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_name
+    from s_user
+  </select>
+
+
+  <select id="getListPage" resultMap="BaseResultMap" parameterType="Map">
+    select id, user_name
+    from s_user
+    <where>
+      <if test="userName != null and userName != '' ">
+        <bind name="userName_like"  value="'%' + userName + '%'"/>
+            and user_name like #{userName_like}
+      </if>
+    </where>
+    order by ID
+  </select>
+
+  <update id="updateById" parameterType="Map">
+    update s_user
+    <trim prefix="set" suffixOverrides=",">
+      <if test="userName != null and userName != '' ">
+        user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+
+</mapper>

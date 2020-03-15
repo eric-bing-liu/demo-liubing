@@ -1,1 +1,2 @@
-master-value1
+master-value1-xxxxxxxxx branch1-modify
+branch1-value  branch1-modify

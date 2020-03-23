@@ -1,10 +1,12 @@
-# demo-highgo总体介绍
+# 1 demo-highgo总体介绍
 demo for highgo databse
 
 
-# 
-# demo-springboot2-highgo 
-一个面向HighgGo-DB的demo样例程序。
+
+
+
+# 2 demo-springboot2-highgo项目
+一个面向HighgGo-DB的demo样例程序。springboot、maven、mybatis。
 
 基础：spring-boot 2.2.5 RELEASE
 
@@ -19,9 +21,9 @@ controller.UserController中有增、删、改、查（详情）、查（分页�
 
 
 
-# demo-springboot2-highgo-mybatis-generator
+# 3 demo-springboot2-highgo-mybatis-generator
 
-mybatis 代码生成样例程序
+mybatis 代码生成样例程序。springboot、maven、mybatis。
 
 配置文件位置：src\main\resources\mybatisGenerator\
 
@@ -72,5 +74,5 @@ generatorConfig.xml
 
 
 
-# HighGo-DB-Driver
+# 4 HighGo-DB-Driver
 程序用到的驱动jar包：HighGo-DB、postgre-sql

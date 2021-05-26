@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
 
-    @RequestMapping(value = {"/index","/"})
-    public String index(){
+    @RequestMapping(value = {"/index", "/"})
+    public String index() {
         return "aaaaaaaaaaaaaaaa";
     }
-
 
 
 }

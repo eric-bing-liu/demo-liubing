@@ -10,8 +10,7 @@ public class DemoJavaConnHighGo {
     public static void main(String[] args) {
         String driver = "com.highgo.jdbc.Driver";
         String url = "jdbc:highgo://127.0.0.1:5866/highgo";
-        try
-        {
+        try {
             Class.forName(driver);
             System.out.println("success find class");
             Connection conn = null;
@@ -21,8 +20,7 @@ public class DemoJavaConnHighGo {
             int pageSize = 3;
             int pageIndex = 1;
 
-            try
-            {
+            try {
 
                 conn = DriverManager.getConnection(url, "highgo", "highgo2020");
                 System.out.println("success connect");
@@ -32,27 +30,20 @@ public class DemoJavaConnHighGo {
                 System.out.println("sql:" + sql);
                 stmt = conn.prepareStatement(sql);
                 stmt.setInt(1, pageSize);//每页显示的数据条数
-                stmt.setInt(2, (pageIndex-1)* pageSize);//第2页第一条数据的前一条数据的id
+                stmt.setInt(2, (pageIndex - 1) * pageSize);//第2页第一条数据的前一条数据的id
                 rs = stmt.executeQuery();
-                while (rs.next())
-                {
+                while (rs.next()) {
                     System.out.println(rs.getInt(1) + "," + rs.getString(2));
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 System.out.println("Error: " + ex.getMessage());
                 ex.printStackTrace(System.out);
-            } finally
-            {
-                if(conn != null)
-                {
+            } finally {
+                if (conn != null) {
                     conn.close();
                 }
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
             ex.printStackTrace(System.out);
         }

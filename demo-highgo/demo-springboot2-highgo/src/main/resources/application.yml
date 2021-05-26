@@ -26,14 +26,14 @@ spring:
   datasource:
     name: test
     # jwjw测试环境mysql数据库 5.7 server
-#    url: jdbc:mysql://127.0.0.1:3306/auth?useUnicode=true&characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+    #    url: jdbc:mysql://127.0.0.1:3306/auth?useUnicode=true&characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
     url: jdbc:highgo://127.0.0.1:5866/highgo
     username: highgo
     password: highgo2020
     # oscar db
-#    url: jdbc:oscar://169.254.63.9/zcptdb
-#    username: SYSDBA
-#    password: szoscar55
+    #    url: jdbc:oscar://169.254.63.9/zcptdb
+    #    username: SYSDBA
+    #    password: szoscar55
 
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource

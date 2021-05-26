@@ -26,7 +26,7 @@ class DemoRedisApplicationTests {
             new Thread(() -> {
                 double r = Math.random();
                 redisService.set("a" + finalI, String.valueOf(r));
-                System.out.println("a" + finalI + " = " + String.valueOf(r).equals( redisService.get("a" + finalI) )  );
+                System.out.println("a" + finalI + " = " + String.valueOf(r).equals(redisService.get("a" + finalI)));
             }).start();
         }
 
@@ -57,7 +57,7 @@ class DemoRedisApplicationTests {
                 for (int j = 0; j < 10; j++) {
                     double r = Math.random();
                     redisService.set("a" + finalI, String.valueOf(r));
-                    System.out.println("a" + finalI + j + " = " + String.valueOf(r).equals( redisService.get("a" + finalI) )  );
+                    System.out.println("a" + finalI + j + " = " + String.valueOf(r).equals(redisService.get("a" + finalI)));
                 }
             }).start();
             System.out.println("---------------" + finalI + "-----------------");

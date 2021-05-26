@@ -14,8 +14,8 @@ public class IndexController {
     @Autowired
     RedisService redisService;
 
-    @RequestMapping(path = {"/","/index"})
-    public String index(){
+    @RequestMapping(path = {"/", "/index"})
+    public String index() {
 
 
         log.info("get redis error, key : {} || {}", "aaaaaaaaa", "bbbb");
@@ -35,29 +35,46 @@ public class IndexController {
      * 测试redis锁
      * http://localhost:9000/index1
      * http://localhost:9000/index2
+     * <p>
+     * index1 -- begin
+     * index2 -- begin
+     * index1 -- true
+     * index1 -- begin sleep
+     * index1 -- end sleep
+     * index1 -- unlock
+     * index2 -- true
+     * index2 -- begin sleep
+     * index2 -- end sleep
+     * index2 -- unlock
      */
     @Autowired
     RedisLock redisLock;
+
     @RequestMapping(path = {"/index1"})
     public String index1() throws InterruptedException {
 
-        log.debug("index1 -- begin");
-        log.debug("index1 -- " + redisLock.lock("aaaa"));
+        log.info("index1 -- begin");
+        log.info("index1 -- " + redisLock.lock("aaaa"));
 
+        log.info("index1 -- begin sleep");
         Thread.sleep(5 * 1000);
+        log.info("index1 -- end sleep");
         redisLock.unlock("aaaa");
-        log.debug("index1 -- unlock");
+        log.info("index1 -- unlock");
 
         return "index1.response";
     }
+
     @RequestMapping(path = {"/index2"})
     public String index2() throws InterruptedException {
-        System.out.println("index2 begin");
-        System.out.println("index2" + redisLock.lock("aaaa"));
+        log.info("index2 -- begin");
+        log.info("index2 -- " + redisLock.lock("aaaa"));
 
+        log.info("index2 -- begin sleep");
         Thread.sleep(5 * 1000);
+        log.info("index2 -- end sleep");
         redisLock.unlock("aaaa");
-        System.out.println("index2 unlock");
+        log.info("index2 -- unlock");
 
         return "index2.response";
     }

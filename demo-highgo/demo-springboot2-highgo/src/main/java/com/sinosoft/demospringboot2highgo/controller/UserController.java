@@ -26,26 +26,27 @@ public class UserController {
     SUserMapper sUserMapper;
 
 
-
     @RequestMapping(value = {"/page"})
     public Object page(String userName,
                        @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex,
-                       @RequestParam(value = "pageSize", defaultValue = "5") int pageSize){
+                       @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
         Map map = new HashMap();
         map.put("userName", userName);
 
         Page page = PageHelper.startPage(pageIndex, pageSize, true);
         List<SUser> listPage = sUserMapper.getListPage(map);
 
-        System.out.println("getTotal:"+page.getTotal());
+        System.out.println("getTotal:" + page.getTotal());
         return listPage;
     }
+
     @RequestMapping(value = {"/detail"})
-    public SUser detail(String id){
+    public SUser detail(String id) {
         return sUserMapper.selectByPrimaryKey(id);
     }
+
     @RequestMapping(value = {"/insert"})
-    public Object insert(String id, String userName){
+    public Object insert(String id, String userName) {
         SUser sUser = new SUser();
         sUser.setId(id);
         sUser.setUserName(userName);
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/update"})
-    public Object update(String id, String userName){
+    public Object update(String id, String userName) {
         SUser sUser = new SUser();
         sUser.setId(id);
         sUser.setUserName(userName);
@@ -61,16 +62,13 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/delete"})
-    public Object delete(String id){
+    public Object delete(String id) {
         return sUserMapper.deleteByPrimaryKey(id);
     }
 
 
-
-
-
     @RequestMapping(value = {"/testTransaction"})
-    public Object testTransaction(){
+    public Object testTransaction() {
 
         try {
             return userService.testTransaction();
@@ -79,8 +77,9 @@ public class UserController {
             return e.toString();
         }
     }
+
     @RequestMapping(value = {"/testTransaction2"})
-    public Object testTransaction2(){
+    public Object testTransaction2() {
 
         try {
             return userService.testTransaction2();

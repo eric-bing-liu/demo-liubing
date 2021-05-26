@@ -35,17 +35,13 @@ public class AspectConfig {
      * execution(* com.wmx.aspect.*.*(..))	匹配 com.wmx.aspect 包(不含子包)下任意类中的任意方法
      * execution(* com.wmx.aspect..*.*(..))	匹配 com.wmx.aspect 包及其子包下任意类中的任意方法
      * </p>
-     *
      * @Aspect:作用是把当前类标识为一个切面供容器读取
-     *
      * @Pointcut：Pointcut是植入Advice的触发条件。每个Pointcut的定义包括2部分，一是表达式，二是方法签名。方法签名必须是 public及void型。可以将Pointcut中的方法看作是一个被Advice引用的助记符，因为表达式不直观，因此我们可以通过方法签名的方式为 此表达式命名。因此Pointcut中的方法只需要方法签名，而不需要在方法体内编写实际代码。
      * @Around：环绕增强，相当于MethodInterceptor
      * @AfterReturning：后置增强，相当于AfterReturningAdvice，方法正常退出时执行
      * @Before：标识一个前置增强方法，相当于BeforeAdvice的功能，相似功能的还有
      * @AfterThrowing：异常抛出增强，相当于ThrowsAdvice
      * @After: final增强，不管是抛出异常或者正常退出都会执行
-     *
-     *
      */
     @Pointcut(value = "execution(* com.liubing.demoaop.controller..*.*(..))")
     private void aspectPointcut() {
@@ -59,16 +55,16 @@ public class AspectConfig {
      * <br/>
      *
      * @param joinPoint：提供对连接点处可用状态和有关它的静态信息的反射访问<br/> <p>
-     *                Object[] getArgs()：返回此连接点处（目标方法）的参数
-     *                Signature getSignature()：返回连接点处的签名。
-     *                Object getTarget()：返回目标对象
-     *                Object getThis()：返回当前正在执行的对象
-     *                StaticPart getStaticPart()：返回一个封装此连接点的静态部分的对象。
-     *                SourceLocation getSourceLocation()：返回与连接点对应的源位置
-     *                String toLongString()：返回连接点的扩展字符串表示形式。
-     *                String toShortString()：返回连接点的缩写字符串表示形式。
-     *                String getKind()：返回表示连接点类型的字符串
-     *                </p>
+     *                                                 Object[] getArgs()：返回此连接点处（目标方法）的参数
+     *                                                 Signature getSignature()：返回连接点处的签名。
+     *                                                 Object getTarget()：返回目标对象
+     *                                                 Object getThis()：返回当前正在执行的对象
+     *                                                 StaticPart getStaticPart()：返回一个封装此连接点的静态部分的对象。
+     *                                                 SourceLocation getSourceLocation()：返回与连接点对应的源位置
+     *                                                 String toLongString()：返回连接点的扩展字符串表示形式。
+     *                                                 String toShortString()：返回连接点的缩写字符串表示形式。
+     *                                                 String getKind()：返回表示连接点类型的字符串
+     *                                                 </p>
      */
     @Before(value = "aspectPointcut()")
     public void aspectBefore(JoinPoint joinPoint) {

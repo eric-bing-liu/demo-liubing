@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 public class PageHelperConfig {
 
     @Bean
-    public PageHelper pageHelper(){
-        PageHelper page= new PageHelper();
+    public PageHelper pageHelper() {
+        PageHelper page = new PageHelper();
         return page;
     }
 }

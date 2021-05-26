@@ -32,7 +32,7 @@ public class RedisLock {
     /**
      * 锁超时时间，防止线程在入锁以后，无限的执行等待
      */
-    private int expireMsecs = 60 * 1000;
+    private int expireMsecs = 20 * 1000;
 
     /**
      * 锁等待时间，防止线程饥饿
@@ -95,8 +95,7 @@ public class RedisLock {
      * 2.锁已经存在则获取锁的到期时间,和当前时间比较,超时的话,则设置新的值
      *
      * @return true if lock is acquired, false acquire timeouted
-     * @throws InterruptedException
-     *             in case of thread interruption
+     * @throws InterruptedException in case of thread interruption
      */
     public boolean lock(String lockKey) throws InterruptedException {
         lockKey = LOCK_PREFIX + lockKey;

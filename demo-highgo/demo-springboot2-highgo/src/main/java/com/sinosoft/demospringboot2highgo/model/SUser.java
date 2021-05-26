@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class SUser implements Serializable{
+public class SUser implements Serializable {
 
     private String id;
 

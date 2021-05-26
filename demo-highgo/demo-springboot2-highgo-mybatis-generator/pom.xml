@@ -55,16 +55,17 @@
                 </executions>
                 <configuration>
                     <!-- generator 工具配置文件的位置 -->
-                    <configurationFile>${basedir}/src/main/resources/mybatisGenerator/generatorConfig.xml</configurationFile>
+                    <configurationFile>${basedir}/src/main/resources/mybatisGenerator/generatorConfig.xml
+                    </configurationFile>
                     <verbose>true</verbose>
                     <overwrite>true</overwrite>
                 </configuration>
                 <dependencies>
-<!--                    <dependency>-->
-<!--                        <groupId>mysql</groupId>-->
-<!--                        <artifactId>mysql-connector-java</artifactId>-->
-<!--                        <version>5.1.47</version>-->
-<!--                    </dependency>-->
+                    <!--                    <dependency>-->
+                    <!--                        <groupId>mysql</groupId>-->
+                    <!--                        <artifactId>mysql-connector-java</artifactId>-->
+                    <!--                        <version>5.1.47</version>-->
+                    <!--                    </dependency>-->
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>

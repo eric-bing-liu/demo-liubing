@@ -40,7 +40,7 @@ public class UserService {
     }
 
 
-    @Transactional( rollbackFor = { Exception.class } )
+    @Transactional(rollbackFor = {Exception.class})
     public String testTransaction2() throws Exception {
         Map map2 = new HashMap();
         map2.put("id", "2");

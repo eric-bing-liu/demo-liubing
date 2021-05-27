@@ -1,0 +1,19 @@
+server:
+  tomcat:
+    # 默认编码格式
+    uri-encoding: UTF-8
+  port: 8000
+
+
+spring:
+  # 默认编码格式
+  messages:
+    encoding: UTF-8
+  banner:
+    charset: UTF-8
+    location: banner.txt
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true

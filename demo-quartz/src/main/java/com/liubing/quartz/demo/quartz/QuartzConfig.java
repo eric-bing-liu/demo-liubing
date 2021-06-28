@@ -11,40 +11,39 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuartzConfig {
 
+//    @Bean
+    public JobDetail testTask1() {
+        return JobBuilder.newJob(Task1.class).withIdentity("testTask1").storeDurably().build();
+    }
 
 //    @Bean
-//    public JobDetail testTask1() {
-//        return JobBuilder.newJob(Task1.class).withIdentity("testTask1").storeDurably().build();
-//    }
-//
+    public Trigger testQuartzTrigger1() {
+        //5秒执行一次
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
+                .withIntervalInSeconds(5)
+                .repeatForever();
+        return TriggerBuilder.newTrigger().forJob(testTask1())  // JobDetail
+                .withIdentity("testTask1")  //
+                .withSchedule(scheduleBuilder)
+                .build();
+    }
+
+
+
+
+
 //    @Bean
-//    public Trigger testQuartzTrigger1() {
-//        //5秒执行一次
-//        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-//                .withIntervalInSeconds(5)
-//                .repeatForever();
-//        return TriggerBuilder.newTrigger().forJob(testTask1())
-//                .withIdentity("testTask1")
-//                .withSchedule(scheduleBuilder)
-//                .build();
-//    }
-//
-//
-//
-//
-//
+    public JobDetail testTask2() {
+        return JobBuilder.newJob(Task2.class).withIdentity("testTask2").storeDurably().build();
+    }
+
 //    @Bean
-//    public JobDetail testTask2() {
-//        return JobBuilder.newJob(Task2.class).withIdentity("testTask2").storeDurably().build();
-//    }
-//
-//    @Bean
-//    public Trigger testQuartzTrigger2() {
-//        //cron方式，每隔4秒执行一次
-//        return TriggerBuilder.newTrigger().forJob(testTask2())
-//                .withIdentity("testTask2")
-//                .withSchedule(CronScheduleBuilder.cronSchedule("*/2 * * * * ?"))
-//                .build();
-//    }
+    public Trigger testQuartzTrigger2() {
+        //cron方式，每隔4秒执行一次
+        return TriggerBuilder.newTrigger().forJob(testTask2())
+                .withIdentity("testTask2")
+                .withSchedule(CronScheduleBuilder.cronSchedule("*/2 * * * * ?"))
+                .build();
+    }
 
 }

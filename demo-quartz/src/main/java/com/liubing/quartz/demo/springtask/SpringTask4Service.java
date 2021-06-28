@@ -26,6 +26,22 @@ public class SpringTask4Service {
         System.out.println("task4 " + beign + " end----" + sdf.format(new Date()));
     }
 
+
+    /**
+     * 无返回值，指定线程池
+     * @throws InterruptedException
+     */
+    @Async(value = "asyncTaskExecutor")
+    public void task5() throws InterruptedException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String beign = sdf.format(new Date());
+        System.out.println("task5 begin----" + beign);
+
+        Thread.sleep(5 * 1000);
+
+        System.out.println("task5 " + beign + " end----" + sdf.format(new Date()));
+    }
+
     /**
      * 有返回值
      * @throws InterruptedException

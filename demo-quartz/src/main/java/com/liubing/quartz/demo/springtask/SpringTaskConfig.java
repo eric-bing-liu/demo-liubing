@@ -71,22 +71,27 @@ public class SpringTaskConfig {
     /**
      * cron表达式，从任何一个值开始每隔2秒执行一次
      */
-    @Scheduled(cron = "*/20 * * * * ?")
+    @Scheduled(cron = "*/1 * * * * ?")
     public void task4() throws InterruptedException, ExecutionException {
-        //无返回值
+        //指定线程池
+        springTask4Service.task5();
+
+
+
+//        //无返回值
 //        springTask4Service.task4();
-
-        //有返回值
-        Future<String> future1 = springTask4Service.task4_withReturnValue1();
-        Future<String> future2 = springTask4Service.task4_withReturnValue2();
-        //如果两个都未完成
-        while (!(future1.isDone() && future2.isDone())){
-            System.out.println("没有都完成，等待1s  future1：" + future1.isDone() + "   future2：" + future2.isDone() + "   ");
-            sleep(1000);
-        }
-        System.out.println(future1.get());
-        System.out.println(future2.get());
-
-        System.out.println("所有任务都结束。。。");
+//
+//        //有返回值
+//        Future<String> future1 = springTask4Service.task4_withReturnValue1();
+//        Future<String> future2 = springTask4Service.task4_withReturnValue2();
+//        //如果两个都未完成
+//        while (!(future1.isDone() && future2.isDone())){
+//            System.out.println("没有都完成，等待1s  future1：" + future1.isDone() + "   future2：" + future2.isDone() + "   ");
+//            sleep(1000);
+//        }
+//        System.out.println(future1.get());
+//        System.out.println(future2.get());
+//
+//        System.out.println("所有任务都结束。。。");
     }
 }

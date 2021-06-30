@@ -1,0 +1,174 @@
+server:
+  tomcat:
+    # 默认编码格式
+    uri-encoding: UTF-8
+  port: 8291
+
+
+spring:
+  # 默认编码格式
+  messages:
+    encoding: UTF-8
+  banner:
+    charset: UTF-8
+    location: banner.txt
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+
+  datasource:
+    name: test
+    #jwjw测试环境mysql数据库 5.7 server
+    url: jdbc:mysql://127.0.0.1:3306/testdb?useUnicode=true&characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: ROOT
+
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  # redis相关配置
+  # 测试actuator是否能够监听redis服务效果
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+    timeout: 6000
+    database: 0
+  # flyway properties
+  flyway:
+    # 连接数据库信息如果不配置，默认使用spring.datasource
+#    url: jdbc:mysql://127.0.0.1:3306/testdb?useUnicode=true&characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+#    user: root
+#    password: ROOT
+    # flyway有一个更新历史表的表，默认 flyway_schema_history
+    table: flyway_schema_history
+    # 设置每个placeholder的前缀，默认${.
+    #placeholder-prefix: V
+    # 设置每个placeholder的后缀，默认}.
+    #placeholder-suffix: xxx
+
+
+    # 设置每个placeholder的后缀，默认}.
+    sql-migration-prefix: V
+    # 迁移脚本的文件名分隔符，默认__
+    sql-migration-separator: __
+    # 设置每个placeholder的后缀，默认}.
+    sql-migration-suffixes: .sql
+    # 迁移脚本的位置，默认db/migration.
+    locations: classpath:/db/migration
+    # 是否允许无序的迁移，默认false.
+    out-of-order: false
+
+    # 迁移时发现目标schema非空，而且带有没有元数据的表时，是否自动执行基准迁移，默认false.
+    baseline-on-migrate: true
+    # 开始执行基准迁移时对现有的schema的版本打标签，默认值为1.
+    baseline-version: 1.0.0
+    # 对执行迁移时基准版本的描述.
+    baseline-description: 对执行迁移时基准版本的描述
+
+    # 是否开启flywary，默认true.
+    enabled: true
+    # 检查迁移脚本的位置是否存在，默认false.
+    check-location: true
+    # 当发现校验错误时是否自动调用clean，默认false.
+    clean-on-validation-error: false
+    # 设置迁移时的编码，默认UTF-8.
+    encoding: UTF-8
+    # 当读取元数据表时是否忽略错误的迁移，默认false.
+    ignore-future-migrations: true
+    # 当初始化好连接时要执行的SQL.
+    #init-sqls: xxxxx
+
+
+
+
+
+
+
+#使用以后 http://localhost:8291/actuator/info 可用
+info:
+  app:
+    name: xxxxxxx
+    version: 1.0
+    description: descriptiondescriptiondescription
+  #随便定义参数信息
+  other:
+    xxx1: a
+    xxx2: b
+
+# http://localhost:8291/actuator/health
+management:
+  endpoints:
+    web:
+      exposure:
+        #自定义管理端点路径
+        include: "*"
+        #禁用
+        #exclude: env,beans
+      #默认访问路径
+      base-path: /actuator
+
+    # 显示详细的 health 信息
+    jmx:
+      # Whether unique runtime object names should be ensured.
+      domain: org.springframework.boot
+      exposure:
+        # Endpoint IDs that should be included or '*' for all.
+        include: '*'
+
+    #启动所有端点
+    enabled-by-default: true
+  endpoint:
+    #auditevents	获取当前应用暴露的审计事件信息
+    #beans	获取应用中所有的 Spring Beans 的完整关系列表
+    #caches	获取公开可以用的缓存
+    #conditions	获取自动配置条件信息，记录哪些自动配置条件通过和没通过的原因
+    #configprops	获取所有配置属性，包括默认配置，显示一个所有 @ConfigurationProperties 的整理列版本
+    #env	获取所有环境变量
+    #flyway	获取已应用的所有Flyway数据库迁移信息，需要一个或多个 Flyway Bean
+    #liquibase	获取已应用的所有Liquibase数据库迁移。需要一个或多个 Liquibase Bean
+    #health	获取应用程序健康指标（运行状况信息）   [status  up 正常；down 不正常；out_of_service 资源未在使用；unknow: 未知]
+    #httptrace	获取HTTP跟踪信息（默认情况下，最近100个HTTP请求-响应交换）。需要 HttpTraceRepository Bean
+    #info	获取应用程序信息
+    #integrationgraph	显示 Spring Integration 图。需要依赖 spring-integration-core
+    #loggers	显示和修改应用程序中日志的配置
+    #logfile	返回日志文件的内容（如果已设置logging.file.name或logging.file.path属性）
+    #metrics	获取系统度量指标信息
+    #访问方法：/actuator/metrics  可以看到所有的name，可访问具体参数 /actuator/metrics/jvm.memory.max
+    #mappings	显示所有@RequestMapping路径的整理列表
+    #scheduledtasks	显示应用程序中的计划任务
+    #sessions	允许从Spring Session支持的会话存储中检索和删除用户会话。需要使用Spring Session的基于Servlet的Web应用程序
+    #shutdown	关闭应用，要求endpoints.shutdown.enabled设置为true，默认为 false
+    #threaddump	获取系统线程转储信息
+    #heapdump	返回hprof堆转储文件
+    #jolokia	通过HTTP公开JMX bean（当Jolokia在类路径上时，不适用于WebFlux）。需要依赖 jolokia-core
+    #prometheus	以Prometheus服务器可以抓取的格式公开指标。需要依赖 micrometer-registry-prometheus
+
+    # 如果 application 是 web application(Spring MVC，Spring WebFlux 或 Jersey)，则可以使用以下附加 endpoints：heapdump、jolokia、logfile、prometheus
+    health:
+      show-details: always

@@ -68,9 +68,30 @@
     <build>
         <plugins>
             <plugin>
+                <!--
+                flywaydb组件
+                clean 清除所有的表结构等信息。  注意这条命令只能在集成环境或测试环境中执行，严禁在生产环境中执行
+                info 可查看当前脚本执行state   未处理Pending  成功Success  失败failed  outdated  future
+                migrate 做迁移  成功以后是 Success
+                repair: 在升级出现错误的情况下，flyway会在meta-table中产生一条错误信息，通过repair命令可以将这条消息删除，然后继续运行相应版本的升级脚本
+                -->
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>5.2.4</version>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.47</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>jdbc:mysql://127.0.0.1:3306/testdb?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;useTimezone=true&amp;serverTimezone=Asia/Shanghai&amp;zeroDateTimeBehavior=convertToNull</url>
+                    <user>root</user>
+                    <password>ROOT</password>
+                </configuration>
             </plugin>
 
             <plugin>

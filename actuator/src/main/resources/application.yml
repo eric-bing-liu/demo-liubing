@@ -4,6 +4,11 @@ server:
     uri-encoding: UTF-8
   port: 8291
 
+mybatis:
+  mapper-locations: classpath:mapping/*.xml,classpath:mapping/*/*.xml
+  type-aliases-package: com.sinosoft.codegenerator.model
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 spring:
   # 默认编码格式

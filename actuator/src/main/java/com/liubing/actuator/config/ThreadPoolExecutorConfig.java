@@ -17,11 +17,11 @@ public class ThreadPoolExecutorConfig {
 
     @Bean("threadPoolExecutorA")
     public ThreadPoolExecutor threadPoolExecutorA() {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(5,
-                10,
-                10,
-                TimeUnit.SECONDS,
-                new ArrayBlockingQueue<Runnable>(20)
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(5,//有效线程数 至少这个数
+                10,//最多线程数
+                10,//等待 N个单位时间后，最多线程数币有效线程数多出来的那部分线程信息将释放掉
+                TimeUnit.SECONDS,//单位时间的单位
+                new ArrayBlockingQueue<Runnable>(20) //待处理队列大小
         );
         return executor;
     }

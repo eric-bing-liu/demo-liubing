@@ -2,6 +2,7 @@ package com.liubing.demoaop.config;
 
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -13,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 import java.lang.reflect.Method;
 
 /**
@@ -90,8 +92,18 @@ public class LogAopAspect {
 
 
     //PointCut表达式
-    @Pointcut("execution(public * com.liubing.demoaop.controller.auth.UserController.*(..))")
+    @Pointcut("execution(public * com.liubing.demoaop.controller.IndexController.*(..))")
+//     * 3）execution(* com.xyz.service.AccountService.*(..))——表示匹配所有AccountService接口的方法
     public void userLog() {
+        System.out.println("Pointcut.userLog");
+    }
+
+    @Around("userLog()")
+    public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("doAround");
+
+        //可以返回controller里的信息
+        return joinPoint.proceed();
     }
 
     @Before("userLog()")
@@ -99,11 +111,6 @@ public class LogAopAspect {
         System.out.println("doBefore");
     }
 
-    //一旦引用了这个，就不走controller中定义的方法
-//    @Around("userLog()")
-//    public void doAround(){
-//        System.out.println("doAround");
-//    }
     @After("userLog()")
     public void doAfter() {
         System.out.println("doAfter");
@@ -114,61 +121,61 @@ public class LogAopAspect {
     public void doAfterThrowing() {
         System.out.println("doAfterThrowing");
     }
-
-
-    /**
-     * 设置操作日志切入点 记录操作日志 在注解的位置切入代码
-     */
-    @Pointcut("@annotation(com.liubing.demoaop.config.LogAop)")
-    public void operLogPoinCut() {
-        System.out.println("operLogPoinCut....");
-    }
-
-    /**
-     * 正常返回通知，拦截用户操作日志，连接点正常执行完成后执行， 如果连接点抛出异常，则不会执行
-     *
-     * @param joinPoint       切入点
-     * @param returningObject 返回结果
-     */
-    @AfterReturning(value = "operLogPoinCut()", returning = "returningObject")
-    public void saveOperLog(JoinPoint joinPoint, Object returningObject) {
-        // 获取RequestAttributes
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        // 从获取RequestAttributes中获取HttpServletRequest的信息
-        HttpServletRequest request = (HttpServletRequest) requestAttributes
-                .resolveReference(RequestAttributes.REFERENCE_REQUEST);
-
-        try {
-
-
-            System.out.println("=========== AfterReturning  begin =========== ");
-
-            // 从切面织入点处通过反射机制获取织入点处的方法
-            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-            // 获取切入点所在的方法
-            Method method = signature.getMethod();
-            // 获取操作
-            LogAop logAop = method.getAnnotation(LogAop.class);
-            if (logAop != null) {
-                System.out.println("logAop.param1() =========== " + logAop.param1());
-                System.out.println("logAop.param2() =========== " + logAop.param2());
-            }
-
-            // 获取请求的类名 + . + 请求的方法名
-            String methodName = joinPoint.getTarget().getClass().getName() + "." + method.getName();
-            System.out.println("methodName =========== " + methodName);
-            System.out.println("returningObject =========== " + returningObject);
-            System.out.println("getRequestURI =========== " + request.getRequestURI());
-            System.out.println("getParameterMap =========== " + new JSONObject(request.getParameterMap()).toString());
-            System.out.println("=========== AfterReturning  end =========== ");
-
-            // 请求的参数
-//            Map<String, String> rtnMap = converMap(request.getParameterMap());
-//            operlog.setOperUserId(UserShiroUtil.getCurrentUserLoginName()); // 请求用户ID
-//            operlog.setOperUserName(UserShiroUtil.getCurrentUserName()); // 请求用户名称
-//            operlog.setOperIp(IPUtil.getRemortIP(request)); // 请求IP
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//
+//
+//    /**
+//     * 设置操作日志切入点 记录操作日志 在注解的位置切入代码
+//     */
+//    @Pointcut("@annotation(com.liubing.demoaop.config.LogAop)")
+//    public void operLogPoinCut() {
+//        System.out.println("operLogPoinCut....");
+//    }
+//
+//    /**
+//     * 正常返回通知，拦截用户操作日志，连接点正常执行完成后执行， 如果连接点抛出异常，则不会执行
+//     *
+//     * @param joinPoint       切入点
+//     * @param returningObject 返回结果
+//     */
+//    @AfterReturning(value = "operLogPoinCut()", returning = "returningObject")
+//    public void saveOperLog(JoinPoint joinPoint, Object returningObject) {
+//        // 获取RequestAttributes
+//        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+//        // 从获取RequestAttributes中获取HttpServletRequest的信息
+//        HttpServletRequest request = (HttpServletRequest) requestAttributes
+//                .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+//
+//        try {
+//
+//
+//            System.out.println("=========== AfterReturning  begin =========== ");
+//
+//            // 从切面织入点处通过反射机制获取织入点处的方法
+//            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+//            // 获取切入点所在的方法
+//            Method method = signature.getMethod();
+//            // 获取操作
+//            LogAop logAop = method.getAnnotation(LogAop.class);
+//            if (logAop != null) {
+//                System.out.println("logAop.param1() =========== " + logAop.param1());
+//                System.out.println("logAop.param2() =========== " + logAop.param2());
+//            }
+//
+//            // 获取请求的类名 + . + 请求的方法名
+//            String methodName = joinPoint.getTarget().getClass().getName() + "." + method.getName();
+//            System.out.println("methodName =========== " + methodName);
+//            System.out.println("returningObject =========== " + returningObject);
+//            System.out.println("getRequestURI =========== " + request.getRequestURI());
+//            System.out.println("getParameterMap =========== " + new JSONObject(request.getParameterMap()).toString());
+//            System.out.println("=========== AfterReturning  end =========== ");
+//
+//            // 请求的参数
+////            Map<String, String> rtnMap = converMap(request.getParameterMap());
+////            operlog.setOperUserId(UserShiroUtil.getCurrentUserLoginName()); // 请求用户ID
+////            operlog.setOperUserName(UserShiroUtil.getCurrentUserName()); // 请求用户名称
+////            operlog.setOperIp(IPUtil.getRemortIP(request)); // 请求IP
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

@@ -43,7 +43,7 @@ public class AspectConfig {
      * @AfterThrowing：异常抛出增强，相当于ThrowsAdvice
      * @After: final增强，不管是抛出异常或者正常退出都会执行
      */
-    @Pointcut(value = "execution(* com.liubing.demoaop.controller..*.*(..))")
+    @Pointcut(value = "execution(* com.liubing.demoaop.controller.auth..*.*(..))")
     private void aspectPointcut() {
         System.out.println("【Pointcut】");
     }
